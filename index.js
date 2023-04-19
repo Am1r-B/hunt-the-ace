@@ -7,6 +7,10 @@ const cardObjectDefinitions = [
 
 const cardBackImgPath = "/images/card-back-blue.png";
 
+let cards;
+
+const playGameButtonElem = document.getElementById("playGame");
+
 /* <div class="card">
   <div class="card-inner">
     <div class="card-front">
@@ -18,7 +22,28 @@ const cardBackImgPath = "/images/card-back-blue.png";
   </div>
 </div> */
 
-createCards();
+loadGame();
+
+function loadGame() {
+  createCards();
+
+  cards = document.querySelectorAll(".card");
+
+  playGameButtonElem.addEventListener("click", startGame);
+}
+
+function startGame() {
+  initializeNewGame();
+  startRound();
+}
+
+function initializeNewGame() {}
+
+function startRound() {
+  initializeNewRound();
+}
+
+function initializeNewRound() {}
 
 function createCards() {
   cardObjectDefinitions.forEach((cardItem) => {

@@ -7,19 +7,26 @@ const cardObjectDefinitions = [
 
 const cardBackImgPath = "/images/card-back-blue.png";
 
-const cardContainerElem = document.querySelector(".card-container");
-
 /* <div class="card">
   <div class="card-inner">
     <div class="card-front">
       <img src="./images/card-JackClubs.png" alt="" class="card-img" />
     </div>
     <div class="card-back">
-      <img src="./images/card-back-Blue.png" alt="" class="card-img" />            </div>
+      <img src="./images/card-back-Blue.png" alt="" class="card-img" />
+    </div>
   </div>
 </div> */
 
-const createCard = (cardItem) => {
+createCards();
+
+function createCards() {
+  cardObjectDefinitions.forEach((cardItem) => {
+    createCard(cardItem);
+  });
+}
+
+function createCard(cardItem) {
   // Create div elements that make up a card
   const cardElem = createElement("div");
   const cardInnerElem = createElement("div");
@@ -69,24 +76,47 @@ const createCard = (cardItem) => {
 
   // Add inner card element as child element to card element
   addChildElement(cardElem, cardInnerElem);
-};
 
-const createElement = (elemType) => {
+  // Add card element as child element to appropriate grid cell
+  addCardToGridCell(cardElem);
+}
+
+function createElement(elemType) {
   return document.createElement(elemType);
-};
+}
 
-const addClassToElement = (elem, className) => {
+function addClassToElement(elem, className) {
   elem.classList.add(className);
-};
+}
 
-const addIdToElement = (elem, id) => {
+function addIdToElement(elem, id) {
   elem.id = id;
-};
+}
 
-const addSrcToImageElem = (imgElem, src) => {
+function addSrcToImageElem(imgElem, src) {
   imgElem.src = src;
-};
+}
 
-const addChildElement = (parentElem, childElem) => {
+function addChildElement(parentElem, childElem) {
   parentElem.appendChild(childElem);
-};
+}
+
+function addCardToGridCell(card) {
+  const cardPositionClassName = mapCardIdToGridCell(card);
+
+  const cardPosElem = document.querySelector(cardPositionClassName);
+
+  addChildElement(cardPosElem, card);
+}
+
+function mapCardIdToGridCell(card) {
+  if (card.id === "1") {
+    return ".card-pos-a";
+  } else if (card.id === "2") {
+    return ".card-pos-b";
+  } else if (card.id === "3") {
+    return ".card-pos-c";
+  } else if (card.id === "4") {
+    return ".card-pos-d";
+  }
+}

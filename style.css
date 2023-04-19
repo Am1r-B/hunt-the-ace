@@ -13,6 +13,7 @@ main {
   height: 55%;
   display: flex;
   justify-content: center;
+  border: 1px solid black;
 }
 
 .card-container {
@@ -49,6 +50,15 @@ main {
   grid-area: d;
   background-color: darkcyan;
   border: 1px solid black;
+}
+
+.card-pos-a,
+.card-pos-b,
+.card-pos-c,
+.card-pos-d {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .card {

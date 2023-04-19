@@ -16,6 +16,10 @@ const cardContainerElem = document.querySelector(".card-container");
 const collapsedGridAreaTemplate = '"a a" "a a"';
 const cardCollectionCellClass = ".card-pos-a";
 
+const numCards = cardObjectDefinitions.length;
+
+let cardPositions = [];
+
 /* <div class="card">
   <div class="card-inner">
     <div class="card-front">
@@ -87,6 +91,31 @@ function flipCards(flipToBack) {
   });
 }
 
+function shuffleCards() {
+  const id = setInterval(shuffle, 12);
+  let shuffleCount = 0;
+
+  function shuffle() {
+    randomizeCardPositions();
+
+    if (shuffleCount === 500) {
+      clearInterval(id);
+    } else {
+      shuffleCount++;
+    }
+  }
+}
+
+function randomizeCardPositions() {
+  const random1 = Math.floor(Math.random() * numCards);
+  const random2 = Math.floor(Math.random() * numCards);
+
+  [cardPositions[random1], cardPositions[random2]] = [
+    cardPositions[random2],
+    cardPositions[random1],
+  ];
+}
+
 function createCards() {
   cardObjectDefinitions.forEach((cardItem) => {
     createCard(cardItem);
@@ -146,6 +175,11 @@ function createCard(cardItem) {
 
   // Add card element as child element to appropriate grid cell
   addCardToGridCell(cardElem);
+
+  initializeCardPositions(cardElem);
+}
+function initializeCardPositions(card) {
+  cardPositions.push(card.id);
 }
 
 function createElement(elemType) {

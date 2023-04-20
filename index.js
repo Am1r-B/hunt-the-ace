@@ -52,6 +52,7 @@ function startRound() {
   initializeNewRound();
   collectCards();
   flipCards(true);
+  shuffleCards();
 }
 
 function initializeNewRound() {}
@@ -68,7 +69,7 @@ function transformGridArea(areas) {
 function addCardsToGridAreaCell(cellPositionClassName) {
   const cellPositionElem = document.querySelector(cellPositionClassName);
 
-  cards.forEach((card, index) => {
+  cards.forEach((card) => {
     addChildElement(cellPositionElem, card);
   });
 }
@@ -100,6 +101,7 @@ function shuffleCards() {
 
     if (shuffleCount === 500) {
       clearInterval(id);
+      dealCards();
     } else {
       shuffleCount++;
     }
@@ -110,10 +112,47 @@ function randomizeCardPositions() {
   const random1 = Math.floor(Math.random() * numCards);
   const random2 = Math.floor(Math.random() * numCards);
 
-  [cardPositions[random1], cardPositions[random2]] = [
-    cardPositions[random2],
-    cardPositions[random1],
-  ];
+  const temp = cardPositions[random1];
+
+  cardPositions[random1] = cardPositions[random2];
+  cardPositions[random2] = temp;
+}
+function dealCards() {
+  addCardsToAppropriateCell();
+  const areasTemplate = returnGridAreasMappedToCardPos();
+
+  transformGridArea(areasTemplate);
+}
+function returnGridAreasMappedToCardPos() {
+  let firstPart = "";
+  let secondPart = "";
+  let areas = "";
+
+  cards.forEach((card, index) => {
+    if (cardPositions[index] == 1) {
+      areas = areas + "a ";
+    } else if (cardPositions[index] == 2) {
+      areas = areas + "b ";
+    } else if (cardPositions[index] == 3) {
+      areas = areas + "c ";
+    } else if (cardPositions[index] == 4) {
+      areas = areas + "d ";
+    }
+
+    if (index == 1) {
+      firstPart = areas.substring(0, areas.length - 1);
+      areas = "";
+    } else if (index == 3) {
+      secondPart = areas.substring(0, areas.length - 1);
+    }
+  });
+  return `"${firstPart}" "${secondPart}"`;
+}
+
+function addCardsToAppropriateCell() {
+  cards.forEach((card) => {
+    addCardToGridCell(card);
+  });
 }
 
 function createCards() {

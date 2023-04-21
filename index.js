@@ -347,7 +347,9 @@ function shuffleCards() {
 
     animateShuffle(shuffleCount);
 
-    if (shuffleCount === 500) {
+    if (shuffleCount < 500) {
+      shuffleCount++;
+    } else {
       clearInterval(id);
       shufflingInProgress = false;
       removeShuffleClasses();
@@ -358,8 +360,6 @@ function shuffleCards() {
         primaryColor,
         "Please click the card that you think is the Ace of Spades..."
       );
-    } else {
-      shuffleCount++;
     }
   }
 }
